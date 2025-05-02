@@ -1,0 +1,12 @@
+[package]
+name = "errtrack"
+version = "0.1.0"
+authors = ["DaiYuANg <dai_yuang@icloud.com>"]
+edition = "2021"
+publish = false
+
+[workspace]
+members = [".", "api", "service", "entity", "migration"]
+
+[dependencies]
+axum-example-api = { path = "api" }
