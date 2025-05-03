@@ -5,10 +5,13 @@ use sea_orm::entity::prelude::*;
 #[sea_orm(table_name = "error_events")]
 pub struct Model {
   #[sea_orm(primary_key)]
-  pub id: i32,
-  pub error_id: i32,
-  pub timestamp: DateTimeUtc,
+  pub id: i64,
+  pub project_id: i64,
+  pub error_id: i64,
+  pub timestamp: DateTimeWithTimeZone,
   pub stacktrace: String,
+  #[sea_orm(column_type = "JsonBinary")]
+  pub tags: Json,
   pub payload: Json,
   pub request_info: Json,
 }

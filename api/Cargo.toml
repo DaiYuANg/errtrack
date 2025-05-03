@@ -9,10 +9,10 @@ publish = false
 axum-example-service = { path = "../service" }
 tokio = { version = "1.34.0", features = ["full"] }
 axum = "0.8"
+figment = { version = "0.10", features = ["toml", "env", "json"] }
 tower = "0.5"
-shaku = { version = "0.6.2" }
-shaku_axum = { version = "0.6.0" }
 tower-http = { version = "0.6", features = ["fs"] }
+validator = { version = "0.19", features = ["derive"] }
 tower-cookies = "0.11"
 anyhow = "1.0.75"
 dotenvy = "0.15.7"
@@ -27,5 +27,6 @@ utoipa-axum = { version = "0.2.0" }
 utoipa-redoc = { version = "6.0.0", features = ["axum"] }
 utoipa-rapidoc = { version = "6.0.0", features = ["axum"] }
 utoipa-scalar = { version = "0.3.0", features = ["axum"] }
-rdkafka = { version = "0.34", features = ["tokio"] }
 tracing = "0.1.41"
+uuid = { version = "1.6", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }

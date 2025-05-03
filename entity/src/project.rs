@@ -12,6 +12,7 @@ pub struct Model {
   pub title: String,
   #[sea_orm(column_type = "Text")]
   pub text: String,
+  pub access_key: String
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
