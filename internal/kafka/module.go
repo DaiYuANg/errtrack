@@ -2,41 +2,20 @@ package kafka
 
 import (
 	"context"
-	"fmt"
-	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+	"github.com/segmentio/kafka-go"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
 
-var Module = fx.Module("kafka", fx.Provide(kafkaConnection), fx.Invoke(listen))
+var Module = fx.Module("kafka", fx.Provide(kafkaConnection), fx.Invoke())
 
-func kafkaConnection() *kafka.Producer {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "localhost"})
+func kafkaConnection(log *zap.SugaredLogger) (*kafka.Conn, error) {
+	topic := "my-topic"
+	partition := 0
+	conn, err := kafka.DialLeader(context.Background(), "tcp", "localhost:9092", topic, partition)
 	if err != nil {
-		panic(err)
+		log.Fatal("failed to dial leader:", err)
 	}
 
-	defer p.Close()
-
-	return p
-}
-
-func listen(lc fx.Lifecycle, kafkaConnection *kafka.Producer, logger *zap.Logger) {
-	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
-			go func() {
-				for e := range kafkaConnection.Events() {
-					switch ev := e.(type) {
-					case *kafka.Message:
-						if ev.TopicPartition.Error != nil {
-							fmt.Printf("Delivery failed: %v\n", ev.TopicPartition)
-						} else {
-							fmt.Printf("Delivered message to %v\n", ev.TopicPartition)
-						}
-					}
-				}
-			}()
-			return nil
-		},
-	})
+	return conn, nil
 }

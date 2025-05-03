@@ -15,6 +15,7 @@ var Module = fx.Module("schedule",
 func newScheduler() gocron.Scheduler {
 	return lo.Must(
 		gocron.NewScheduler(
+			gocron.WithMonitor(newMonitor()),
 			gocron.WithLogger(
 				gocron.NewLogger(gocron.LogLevelDebug),
 			),

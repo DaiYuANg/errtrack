@@ -26,7 +26,6 @@ func container() *fx.App {
 		schedule.Module,
 		repository.Module,
 		cache.Module,
-		mail.Module,
 		fx.WithLogger(func(log *zap.Logger) fxevent.Logger {
 			return &fxevent.ZapLogger{Logger: log}
 		}),

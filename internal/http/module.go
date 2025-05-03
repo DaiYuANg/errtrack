@@ -33,7 +33,13 @@ func startFiber(lc fx.Lifecycle, app *fiber.App) {
 
 func setupMiddleware(app *fiber.App, zapLogger *zap.Logger) {
 	app.Get("/metrics", monitor.New())
-	app.Use(healthcheck.New())
+	app.Use(healthcheck.New(healthcheck.Config{
+		LivenessProbe: func(c *fiber.Ctx) bool {
+			return true
+		},
+		LivenessEndpoint:  "/live",
+		ReadinessEndpoint: "/ready",
+	}))
 	app.Use(logger.New())
 	app.Use(requestid.New())
 	app.Use(etag.New())
