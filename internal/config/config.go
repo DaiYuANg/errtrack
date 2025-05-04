@@ -1,14 +1,17 @@
 package config
 
 type ErrTrackConfig struct {
-	Server   ServerConfig
-	Database DatabaseConfig
-	Kafka    KafkaConfig
+	Server   ServerConfig   `koanf:"server"`
+	Database DatabaseConfig `koanf:"database"`
+	Kafka    KafkaConfig    `koanf:"kafka"`
+	Security SecurityConfig `koanf:"security"`
 }
 
-type ServerConfig struct {
+type DatabaseConfig struct {
+	Type string
+	Url  string
 }
 
-type DatabaseConfig struct{}
-
-type KafkaConfig struct{}
+type KafkaConfig struct {
+	Url string
+}
