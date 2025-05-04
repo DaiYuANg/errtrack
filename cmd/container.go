@@ -3,8 +3,10 @@ package cmd
 import (
 	"errtrack/internal/cache"
 	"errtrack/internal/config"
+	"errtrack/internal/controller"
 	"errtrack/internal/db"
 	"errtrack/internal/http"
+	"errtrack/internal/id_generator"
 	"errtrack/internal/kafka"
 	"errtrack/internal/logger"
 	"errtrack/internal/mail"
@@ -18,7 +20,9 @@ import (
 func container() *fx.App {
 	return fx.New(
 		config.Module,
+		id_generator.Module,
 		http.Module,
+		controller.Module,
 		db.Module,
 		logger.Module,
 		kafka.Module,
